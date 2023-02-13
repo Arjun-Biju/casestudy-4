@@ -9,7 +9,7 @@ xhttp.onreadystatechange= function(){
             arrayy += "<tr> <td>" + output[i].id + "</td>"+"<td>" + output[i].title + "</td>";
             if(output[i].completed==true){
                 let elements = document.createElement("input");
-                // elements.type = 'checkbox';
+                elements.type = 'checkbox';
                 elements.setAttribute("id",`cb${i}`)
                 arrayy += "<td>" + elements + "</td> </tr>";
                 console.log(elements.id)
