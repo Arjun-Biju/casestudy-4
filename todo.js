@@ -6,21 +6,23 @@ xhttp.onreadystatechange= function(){
         var output = JSON.parse(this.responseText);
         var arrayy=""
         for(let i=0;i<output.length;++i){
-            arrayy += "<tr> <td>" + output[i].id + "</td>"+"<td>" + output[i].title + "</td>";
-            if(output[i].completed==true){
-                let elements = document.createElement("input");
-                elements.type = 'checkbox';
-                elements.setAttribute("id",`cb${i}`)
-                arrayy += "<td>" + elements + "</td> </tr>";
-                console.log(elements.id)
-            }
-            else{
-                let elementz = document.createElement("input");
-                elementz.type = 'checkbox';
-                elementz.setAttribute("id",`cb${i}`)
-                arrayy += "<td>" + elementz + "</td> </tr>";
-                console.log(elementz.id);
-            }
+            arrayy += "<tr> <td>" + output[i].id + "</td>"+"<td>" + output[i].title + "</td>" + "<td>" + `<input type="checkbox" class="checkbox" ${output[i].completed? "checked disabled" : ""}/> </td> </tr>`;
+            
+            // if(output[i].completed==true){
+            //     var elements = document.createElement("input");
+            //     elements.type = 'checkbox';
+            //     elements.checked = true;
+            //     elements.setAttribute("id",`cb${i}`)
+            //     arrayy += "<td>" + elements + "</td> </tr>";
+            //     console.log(elements.id)
+            // }
+            // else{
+            //     var elementz = document.createElement("input");
+            //     elementz.type = 'checkbox';
+            //     elementz.setAttribute("id",`cb${i}`)
+            //     arrayy += "<td>" + elementz + "</td> </tr>";
+            //     console.log(elementz.id);
+            // }
         }
         document.getElementById("todo").innerHTML=arrayy;
     }
