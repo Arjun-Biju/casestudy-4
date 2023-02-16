@@ -1,29 +1,48 @@
-let xhttp = new XMLHttpRequest;
-xhttp.open("GET","https://jsonplaceholder.typicode.com/todos",true);
-xhttp.send();
-xhttp.onreadystatechange= function(){
-    if(this.readyState==4 && this.status == 200){
-        var output = JSON.parse(this.responseText);
-        var arrayy=""
-        for(let i=0;i<output.length;++i){
-            arrayy += "<tr> <td>" + output[i].id + "</td>"+"<td>" + output[i].title + "</td>" + "<td>" + `<input type="checkbox" class="checkbox" ${output[i].completed? "checked disabled" : ""}/> </td> </tr>`;
-            
-            // if(output[i].completed==true){
-            //     var elements = document.createElement("input");
-            //     elements.type = 'checkbox';
-            //     elements.checked = true;
-            //     elements.setAttribute("id",`cb${i}`)
-            //     arrayy += "<td>" + elements + "</td> </tr>";
-            //     console.log(elements.id)
-            // }
-            // else{
-            //     var elementz = document.createElement("input");
-            //     elementz.type = 'checkbox';
-            //     elementz.setAttribute("id",`cb${i}`)
-            //     arrayy += "<td>" + elementz + "</td> </tr>";
-            //     console.log(elementz.id);
-            // }
-        }
-        document.getElementById("todo").innerHTML=arrayy;
-    }
-}
+function generateTable(){
+    fetch('https://jsonplaceholder.typicode.com/todos')
+    .then(response=>response.json())
+    .then(data=>{
+        const tablebody = document.getElementById("table-body")
+        let counter=0;
+        data.forEach(item => {
+            const row = tablebody.insertRow();
+            const idCell = row.insertCell();
+            const titleCell = row.insertCell();
+            const completedCell = row.insertCell();
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            idCell.textContent = item.id;
+            titleCell.textContent = item.title;
+            completedCell.appendChild(checkbox);
+            if(item.completed){
+                completedCell.classList.add('completed-true');
+                checkbox.checked=true;
+                checkbox.disabled=true;
+                counter++;
+            }else{
+                completedCell.classList.add('completed-false');
+            }
+            checkbox.addEventListener('change',event => {
+                new Promise((resolve,reject)=>{
+                    if(event.target.checked){
+                        resolve();
+                    }
+                    else{
+                        reject();
+                    }
+                })
+                .then(() => {
+                    counter++;
+                    if(counter % 5 === 0){
+                        alert("Congrats!! You have successfully completed 5 tasks")
+                    }
+                })
+                .catch(() => {
+                    counter--;
+                });
+            })
+        });
+    });
+};
+
+generateTable();
