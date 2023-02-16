@@ -34,7 +34,8 @@ function generateTable(){
                 .then(() => {
                     counter++;
                     if(counter % 5 === 0){
-                        alert("Congrats!! You have successfully completed 5 tasks")
+                        setTimeout(()=>{
+                            alert("Congrats!! You have successfully completed a set of 5 activities")},50)
                     }
                 })
                 .catch(() => {
